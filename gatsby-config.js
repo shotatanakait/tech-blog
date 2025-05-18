@@ -10,15 +10,15 @@
 module.exports = {
   pathPrefix: `/tech-blog`,
   siteMetadata: {
-    title: `Gatsby Starter Blog`,
+    title: `TECH BLOG.`,
     author: {
-      name: `Kyle Mathews`,
-      summary: `who lives and works in San Francisco building useful things.`,
+      name: `Shota Tanaka`,
+      summary: `who lives and works in Osaka creating useful tools and services.`,
     },
     description: `A starter blog demonstrating what Gatsby can do.`,
-    siteUrl: `https://gatsbystarterblogsource.gatsbyjs.io/`,
+    siteUrl: `https://shotatanakait.github.io/tech-blog/`,
     social: {
-      twitter: `kylemathews`,
+      twitter: `test_user`,
     },
   },
   plugins: [
