@@ -2,7 +2,6 @@
 title: "Gatsby ブログの作り方"
 date: "2025-05-19"
 description: "This is sample blog which is created by gatsby. Gatsby is a Library based on React and GraphQL and so on..."
-slug: "custom-hello"
 ---
 
 # 見出し1です。
