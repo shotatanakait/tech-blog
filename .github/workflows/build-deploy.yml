@@ -45,11 +45,22 @@ jobs:
                 npx gatsby clean
                 npm run build
 
+          - name: Debug directory structure
+            run: |
+                pwd
+                ls -la
+                git rev-parse --is-inside-work-tree || echo "Not inside a git repository"
+
+          - name: Ensure we're in the right directory
+            run: |
+                cd public-repo || true
+                pwd
+                git rev-parse --is-inside-work-tree || echo "Not inside a git repository"
+
           - name: Deploy to Github Pages
             uses: JamesIves/github-pages-deploy-action@v4
             with:
                 branch: gh-pages
-                folder: public-repo/public
+                folder: ./public
                 token: ${{ secrets.GITHUB_TOKEN }}
-                clean: true
-                commit-message: "Deploy: ${GITHUB_SHA}"
+                git-config-name: shotatanakait
