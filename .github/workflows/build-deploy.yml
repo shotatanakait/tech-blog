@@ -42,6 +42,7 @@ jobs:
           - name: Build Gatsby Site
             run: |
                 cd public-repo
+                npx gatsby clean
                 npm run build
 
           - name: Deploy to Github Pages
