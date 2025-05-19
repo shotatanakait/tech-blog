@@ -1,0 +1,52 @@
+name: Build and Deploy
+
+on:
+    push:
+        branches:
+            - master
+    workflow_dispatch:
+
+jobs:
+    build-and-deploy:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Checkout Public Repo
+            uses: actions/checkout@v3
+            with:
+                path: public-repo
+
+          - name: Setup Node.js
+            uses: actions/setup-node@v3
+            with:
+                node-version: 18
+                cache: 'npm'
+                cache-dependency-path: public-repo/package-lock.json
+
+          - name: Checkout Private Repo
+            uses: action/checkout@v3
+            with:
+                repository: shotatanakait/tech-blog-contents
+                token: ${{ secrets.CONTENT_ACCESS_TOKEN }}
+                path: private-repo
+
+          - name: Copy content to Public Repo
+            run: |
+                mkdir -p public-repo/content/blog
+                cp -r private-repo/content/blog/* public-repo/content/blog/
+
+          - name: Install depencencies
+            run: |
+                cd public-repo
+                npm ci
+
+          - name: Build Gatsby Site
+            run: |
+                cd public-repo
+                npm run build
+
+          - name: Deploy to Github Pages
+            uses: JamesIves/github-pages-deploy-action@v4
+            with:
+                branch: gh-pages
+                folder: public-repo/public
+                token: ${{ secrets.GITHUB_TOKEN }}
