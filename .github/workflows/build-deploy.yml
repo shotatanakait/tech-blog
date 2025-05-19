@@ -9,10 +9,10 @@ on:
 jobs:
     build-and-deploy:
         runs-on: ubuntu-latest
-        permissions:
-            contents: write
-            pages: write
-            id-token: write
+        # permissions:
+        #     contents: write
+        #     pages: write
+        #     id-token: write
         steps:
           - name: Checkout Public Repo
             uses: actions/checkout@v3
@@ -49,22 +49,33 @@ jobs:
                 npx gatsby clean
                 npm run build
 
-          - name: Debug directory structure
-            run: |
-                pwd
-                ls -la
-                git rev-parse --is-inside-work-tree || echo "Not inside a git repository"
+        #   - name: Debug directory structure
+        #     run: |
+        #         pwd
+        #         ls -la
+        #         git rev-parse --is-inside-work-tree || echo "Not inside a git repository"
 
-          - name: Ensure we're in the right directory
-            run: |
-                cd public-repo || true
-                pwd
-                git rev-parse --is-inside-work-tree || echo "Not inside a git repository"
+        #   - name: Ensure we're in the right directory
+        #     run: |
+        #         cd public-repo || true
+        #         pwd
+        #         git rev-parse --is-inside-work-tree || echo "Not inside a git repository"
+
+        #   - name: Deploy to Github Pages
+        #     uses: JamesIves/github-pages-deploy-action@v4
+        #     with:
+        #         branch: gh-pages
+        #         folder: public-repo/public
+        #         token: ${{ secrets.GITHUB_TOKEN }}
+        #         git-config-name: shotatanakait
+
+          - name: Setup Github Pages
+            uses: actions/configure-pages@v3
+
+          - name: Upload artifact
+            uses: actions/upload-artifact@v2
+            with:
+                path: public-repo/public
 
           - name: Deploy to Github Pages
-            uses: JamesIves/github-pages-deploy-action@v4
-            with:
-                branch: gh-pages
-                folder: public-repo/public
-                token: ${{ secrets.GITHUB_TOKEN }}
-                git-config-name: shotatanakait
+            uses: actions/deploy-pages@v2
