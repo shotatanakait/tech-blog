@@ -44,6 +44,13 @@ jobs:
                 cd public-repo
                 npm run build
 
+          - name: Check deployment source directory
+            run: |
+                pwd
+                cd public-repo/public || echo "Directory not found."
+                ls -la
+                cd ../..
+
           - name: Deploy to Github Pages
             uses: JamesIves/github-pages-deploy-action@v4
             with:
